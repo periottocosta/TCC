@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <link href="jquery/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+        <title>Cadastro</title>
+    </head>
+    <body >       
+        <header  data-theme="b" data-role="header">            
+            <h5>Cadastros</h5>  
+            <a href="menu.html" data-role="button" data-inline="true" data-theme="a" data-iconpos="notext" data-transition="flow" data-idonpos="left" data-icon="arrow-l">
+            </a>
+        </header>
+        <section>
+            <h3>Cadastrar Cliente</h3>
+			<label>Propretário</label>
+            <input type="text" class="cliente" id="nome" name="nome"/>
+				
+			<label>CPF</label>
+            <input type="text" class="cliente" name="cpf" id="cpf"/>
+				
+			<label>Tel ou Cel</label>
+            <input type="tel" class="cliente" name="telefone" id="telefone"/>
+				
+			<label>E-mail</label>
+            <input type="text" class="cliente" name="email" id="email"/>   
+
+            <label>Tipo de Imóvel</label>
+            <select id="tipo" name="tipo" class="cliente">
+                <option></option>
+                <option >Casa</option>
+                <option >Terreno</option>
+                <option >Apartamento</option>
+                <option >Sala Comercial</option>
+            </select>
+
+            <label>Descricao</label>
+            <textarea class="cliente" name="descricao" id="descricao">
+            </textarea>
+
+            <input id="cad" data-role="botton" data-theme="b" data-icon="check" value="Salvar" type="button"/>              
+        </section>       
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; padding: 0px 0px 0px 100px;"/>
+                <h:form id="fromPesq"> 
+                    <p:fieldset legend="Imovel" >                     
+                    
+                        <p:commandButton value="Voltar" onclick="javascript:window.history.go(-1)"/>
+                        <h:panelGrid columns="2" id="update">
+                            <h:outputText value="Adicionar foto: "/>    
+                            <p:fileUpload fileUploadListener="#{imovelControle.fileUploadActionGaleria}" update="gridGaleria" auto="false" multiple="false" /> 
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:separator style="width: 98%; height: 0px; margin-top: 10px; "/>
+
+                    <p:dataTable id="gridGaleria" paginator="true" rows="15" 
+                                 value="#{imovelControle.imagensGaleria}" var="image">                     
+                        <p:column>
+                            <f:facet name="header">Imagen:</f:facet>                           
+                            <p:graphicImage  value="../imagensDeImoveis/#{image.nome}" width="100" height="80" title="#{image.nome}"/>
+                        </p:column >
+                        <p:column>
+                            <f:facet name="header">nome:</f:facet>
+                            <h:outputText value="#{image.nome}"/><br/>
+                        </p:column >
+<!--                        <p:column>
+                            <f:facet name="header">galeria:</f:facet>
+                                             
+                           <p:commandButton icon="ui-icon-check" title="(Ao clickar no botão vocês estara adicionado essa imagen para representar o imovel nos resultados de busca) ATENÇÂO sera aceitavel uma imagen por imovel" action="#{siteControle.criaStatusImagenCapa(image.id,image.idImovel.id)}"/>
+                        </p:column >-->
+                        <p:column>  
+                            <f:facet name="header">Excluir:</f:facet>
+                            <p:commandButton image="ui-icon-trash" title="Excluir"  
+                                             onclick="confirmation.show()">  
+                                <f:setPropertyActionListener value="#{image.id}"  
+                                                             target="#{imovelControle.imagen.id}" />  
+                            </p:commandButton>  
+
+                        </p:column>  
+                    </p:dataTable> 
+                    <p:confirmDialog id="confirmDialog" message="Confirma Exclusão?" severity="alert" widgetVar="confirmation">  
+                        <p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide()" actionListener="#{imovelControle.deleteFotoGaleria}" update="gridGaleria">  
+                        </p:commandButton>  
+                        <p:commandButton id="decline" value="Não" onclick="confirmation.hide()" type="button" />  
+                    </p:confirmDialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

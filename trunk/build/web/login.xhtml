@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Bem vindo a Trust!</title>
+           <link href="css/css.css" rel="stylesheet" type="text/css" />
+        <link type="text/css" rel="stylesheet" href="css/login.css"/>
+    </h:head>
+    <h:body>
+        <p:growl id="messages"/> 
+        <div id="barra">
+            <a href="index.faces" title="Home"><img src="imagens/home3.png" /></a>
+        </div>
+        <div id="form">
+            <h3>Bem Vindo a Pax </h3>
+            <p>Esta área é restrita.<br />Somente funcionários tem o direito de logar,<br />
+                se você nao é um funcionário por favor retorne a home</p>
+            <center>
+                <!--<h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: red"/>-->
+                <div id="msn1">
+                    <c:if test="#{param.erro != null}">
+                        <div class="erroLogin" >
+                            <p class="msnLogin" style="font-weight: bold;">Usuário ou senha incorretos!</p>
+                        </div>
+                    </c:if>
+                </div>
+            </center>
+            <div class="container">   
+                <section class="main">
+                    <form action="j_spring_security_check" method="post" class="form-1">
+                        <p class="field" >
+                            <h:inputText  id="j_username" required="true" />
+                            <i class="icon-user icon-large"></i>
+                        </p>
+                        <p class="field">
+                            <h:inputSecret  id="j_password" required="true"/>
+                            <i class="icon-lock icon-large"></i>
+                        </p>
+                        <p class="submit">
+                            <button type="submit" name="submit"><i class="icon-arrow-right icon-large"></i></button>
+                        </p>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </h:body>
+</html>

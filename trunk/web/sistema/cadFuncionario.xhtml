@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cad. Funcionario</title>
+        <script>
+            jQuery(function($) {
+                $("#salario").maskMoney({symbol: "R$ ", decimal: ",", thousands: ".", showSymbol: true});
+            });
+        </script>  
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; "/>
+                <h:form id="form_CadFunc">
+                    <p:fieldset legend="Cadastrar Funcionario" style="padding: 0px 0px 0px 100px;">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome: " />
+                            <p:inputText id="nome" value="#{funcionarioControle.func.nome}" size="30" required="true" requiredMessage="Nome obrigatorio!!" />
+
+                            <h:outputText value="Cpf: " />
+                            <p:inputMask id="cpf" mask="999.999.999-99" value="#{funcionarioControle.func.cpf}" size="15" required="true" requiredMessage="Cpf obrigatorio!!" />
+
+                            <h:outputText value="Rg: "/>
+                            <p:inputText id="rg" value="#{funcionarioControle.func.rg}" size="15" required="true" requiredMessage="RG obrigatorio!!" />
+
+                            <h:outputText value="Telefone: " />
+                            <p:inputMask id="telefone" mask="(99) 9999-9999" value="#{funcionarioControle.func.telefone}" size="15"/>
+
+                            <h:outputText value="Celular: " />
+                            <p:inputMask id="celular" mask="(99) 9999-9999" value="#{funcionarioControle.func.celular}" size="15"/>
+
+                            <h:outputText value="E-mail: " />
+                            <p:inputText id="email" value="#{funcionarioControle.func.email}" size="30" required="true" requiredMessage="E-mail obrigatorio!!" />
+
+                            <h:outputLabel value="Sexo: " />                           
+                            <p:selectOneRadio id="IDsexo" value="#{funcionarioControle.func.sexo}" required="true" requiredMessage="Sexo obrigatorio!!" >
+                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
+                                <f:selectItem itemValue="Feminino" itemLabel="Feminino"/>
+                            </p:selectOneRadio>
+
+                            <h:outputText value="Data de Nasc: " />        
+                            <p:calendar id="ptCal" value="#{funcionarioControle.func.nascimento}" size="15" required="true"
+                                        yearRange="1935" showButtonPanel="true" locale="pt" navigator="true" requiredMessage="Data de mascimento obrigatorio!"/>     
+
+                            <h:outputLabel value="Função" />
+                            <p:selectOneMenu id="IDFuncao" value="#{funcionarioControle.funcao.id}">
+                                <f:selectItem itemValue="" itemLabel="Selecionar"/>
+                                <f:selectItems value="#{funcionarioControle.todasFuncoes}"/>
+                                <p:ajax listener="#{funcionarioControle.abilitaCresci}" event="change" update="creci" />
+                            </p:selectOneMenu>
+
+                            <h:outputText id="outCreci" value="Cresci: " />  
+                            <p:inputText id="creci" value="#{funcionarioControle.func.cresci}" size="15" disabled="#{!funcionarioControle.cresci}" readonly="true" required="false" requiredMessage="Cresci obrigatorio!!!!"/>
+                         
+                            <h:outputText  value="Cracha: " />
+                            <p:inputText id="cracha" value="#{funcionarioControle.func.cracha}" size="15" required="true"  requiredMessage="cracha obrigatorio!!" />
+
+                            <h:outputText value="Salario: " />
+                            <p:inputText id="salario" value="#{funcionarioControle.func.salario}" size="15">
+                                <f:convertNumber pattern="#,##0.00"></f:convertNumber>  
+                                <p:ajax update="salario" process="salario" event="change" /> 
+                            </p:inputText> 
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Cep: " />
+                            <p:inputText id="cep" value="#{funcionarioControle.cep.cep}" size="20" style="margin: 0px 0px 0px 65px;"/>
+                            <p:commandButton title="Pesquisar" action="#{funcionarioControle.pesquisaCep()}" update="endereco" process="@this,cep" icon="ui-icon-search" />
+                        </h:panelGrid>
+                        <h:panelGrid id="endereco" columns="2">
+                            <h:outputText value="Logradouro: " />
+                            <p:inputText id="logradouro" value="#{funcionarioControle.cep.logradouro}" size="30" readonly="true" required="false" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Numero: " />
+                            <p:inputText id="numero" value="#{funcionarioControle.end.numero}" size="15" required="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Bairro: " />
+                            <p:inputText id="bairro" value="#{funcionarioControle.cep.bairro.nome}" size="30" readonly="true" required="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Municipio: " />                            
+                            <p:inputText id="municipio" value="#{funcionarioControle.cep.bairro.municipio.nome}" size="30" readonly="true" required="false" requiredMessage="Numero obrigatorio!!" />
+
+                            <h:outputText value="Estado: " />
+                            <p:inputText id="estado" value="#{funcionarioControle.cep.bairro.municipio.estado.sigla}" size="15" readonly="true" required="false" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Complemento: " />
+                            <p:inputTextarea id="complemento" value="#{funcionarioControle.end.complemento}" cols="50" required="false" requiredMessage="Numero obrigatorio!!" />
+
+                        </h:panelGrid>
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{funcionarioControle.salvar()}" ajax="false" style="margin: 0px 0px 0px 350px"/>
+
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

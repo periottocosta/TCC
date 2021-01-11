@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/basedadosimobiliaria</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password"></property>
+    <property name="hibernate.connection.pool_size">10</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+    <mapping class="br.com.imobiliaria.entidade.Estado"/>
+    <mapping class="br.com.imobiliaria.entidade.Municipio"/>
+    <mapping class="br.com.imobiliaria.entidade.Bairro"/>
+    <mapping class="br.com.imobiliaria.entidade.Cep"/>
+    <mapping class="br.com.imobiliaria.entidade.Endereco"/>
+    <mapping class="br.com.imobiliaria.entidade.Funcao"/>
+    <mapping class="br.com.imobiliaria.entidade.TipoImovel"/>
+    <mapping class="br.com.imobiliaria.entidade.Perfil"/>
+    <mapping class="br.com.imobiliaria.entidade.Pessoa"/>
+    <mapping class="br.com.imobiliaria.entidade.Cliente"/>
+    <mapping class="br.com.imobiliaria.entidade.Funcionario"/>
+    <mapping class="br.com.imobiliaria.entidade.Imovel"/>
+    <mapping class="br.com.imobiliaria.entidade.Imagens"/>
+    <mapping class="br.com.imobiliaria.entidade.Usuario"/>
+    <mapping class="br.com.imobiliaria.entidade.Click"/>
+    <mapping class="br.com.imobiliaria.entidade.Venda"/>
+  </session-factory>
+</hibernate-configuration>

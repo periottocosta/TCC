@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Pesq. Funcionario</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; "/>
+                <h:form id="formPesqFuncionario">
+                    <p:fieldset legend="Pesquisa Funcionario">                      
+                        <h:panelGrid style="margin-bottom: 20px;" columns="2">
+                            <p:selectOneMenu id="IDfuncionariol" value="#{funcionarioControle.func.id}">
+                                <f:selectItem itemValue="" itemLabel="Escolha o Corretor"/>
+                                <f:selectItems value="#{funcionarioControle.todosFunc}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton update="dadosFunc,dadosImovel" value="Pesquisar" action="#{funcionarioControle.pesquisaFncionarioNome()}" icon="ui-icon-search" />
+                        </h:panelGrid>
+                        <h:panelGrid id="dadosFunc" columns="2">
+                            <h:outputText value="Nome: " />
+                            <h:outputText  value="#{funcionarioControle.func.nome}" />
+
+                            <h:outputText value="Cracha: " />
+                            <h:outputText  value="#{funcionarioControle.func.cracha}" />
+
+                            <h:outputText value="Cpf: " />
+                            <h:outputText  value="#{funcionarioControle.func.cpf}" />
+
+                            <p:commandButton value="Editar Funcionario" action="#{funcionarioControle.alterar()}" rendered="#{funcionarioControle.func.nome != null}"/>
+                            <!--c-->
+                            <p:commandButton image="ui-icon-trash" value="Excluir Funcionario" title="Excluir" onclick="confirmation.show()" rendered="#{funcionarioControle.func.nome != null}"/>  
+                            <!--dialog-->
+                        </h:panelGrid>
+                        <p:confirmDialog id="confirmDialog" message="Confirma Exclusão?" severity="alert" widgetVar="confirmation"> 
+                            <p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide()" actionListener="#{funcionarioControle.excluir()}" />  
+                            <!--</p:commandButton>-->  
+                            <p:commandButton id="decline" value="Não" onclick="confirmation.hide()" type="button" />  
+                        </p:confirmDialog>
+
+                        <h:panelGrid id="dadosImovel" columns="1">
+                            <p:dataTable id="gridFuncionario" paginator="false" rows="15" 
+                                         emptyMessage="Nenhum valor encontrado" value="#{funcionarioControle.func.imoveis}" var="funcGrid">
+                                <f:facet name="header">
+                                    <h:outputText value="Listando listados" />
+                                </f:facet>
+                                <p:column>
+                                    <f:facet name="header">Propietario</f:facet>
+                                    <h:outputText value="#{funcGrid.cliente.nome}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">Tipo imovel</f:facet>
+                                    <h:outputText value="#{funcGrid.tipoImovel.nome}"/>
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">Valor</f:facet>
+                                    <h:outputText value="#{funcGrid.valorImovel}"/>
+                                </p:column> 
+                                <p:column>
+                                    <f:facet name="header">Endereco</f:facet>
+                                    <p:commandButton value="Endereco" action="#{funcionarioControle.pesquisaImovelEndereco(funcGrid.id)}"  oncomplete="dlgEnd.show()"/>
+                                </p:column> 
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </p:fieldset>
+
+                    <!--                    <p:dialog header="Realocar Imovel" widgetVar="dlgRealocar" resizable="false" appendToBody="true">  
+                                            <h:panelGrid id="altera" columns="2">
+                                                <p:selectOneMenu id="IDfuncionario3" value="#/{funcionarioControle.func.id}">
+                                                    <f:selectItem itemValue="" itemLabel="Escolha o Corretor"/>
+                                                    <f:selectItems value="#/{funcionarioControle.listaCombo2}"/>
+                                                </p:selectOneMenu>
+                                                <p:commandButton  value="Pesquisar" action="#/{funcionarioControle.realocaImovelCorretor(funcionarioControle.func.id)}" icon="ui-icon-search" />
+                                            </h:panelGrid>
+                                        </p:dialog>-->
+
+                    <p:dialog header="Pesquisa de Imoveis" widgetVar="dlgEnd" resizable="false" appendToBody="true">  
+                        <p:commandButton value="Carregar" update="endereco2" action="#{funcionarioControle.abiletaEnd}">
+                            <p:ajax listener="#{funcionarioControle.abiletaEnd}" event="click" />
+                        </p:commandButton>
+                        <h:panelGrid id="endereco2" columns="2">
+                            <h:outputText value="Logradouro: " rendered="#{!funcionarioControle.carrega}"/>
+                            <p:inputText id="logradouro" value="#{funcionarioControle.imovel.endereco.cep.logradouro}" rendered="#{!funcionarioControle.carrega}" size="35" readonly="true"  />
+
+                            <h:outputText value="Numero: " rendered="#{!funcionarioControle.carrega}"/>
+                            <p:inputText id="numero" value="#{funcionarioControle.imovel.endereco.numero}" rendered="#{!funcionarioControle.carrega}" required="true" readonly="true" />
+
+                            <h:outputText value="Bairro: " rendered="#{!funcionarioControle.carrega}" />
+                            <p:inputText id="bairro" value="#{funcionarioControle.imovel.endereco.cep.bairro.nome}" rendered="#{!funcionarioControle.carrega}" readonly="true" />
+
+                            <h:outputText value="Municipio: " rendered="#{!funcionarioControle.carrega}" />                            
+                            <p:inputText id="municipio" value="#{funcionarioControle.imovel.endereco.cep.bairro.municipio.nome}" rendered="#{!funcionarioControle.carrega}" readonly="true" />
+
+                            <h:outputText value="Estado: " rendered="#{!funcionarioControle.carrega}"/>
+                            <p:inputText id="estado" value="#{funcionarioControle.imovel.endereco.cep.bairro.municipio.estado.sigla}" rendered="#{!funcionarioControle.carrega}" readonly="true" />
+
+                            <h:outputText value="Complemento: " rendered="#{!funcionarioControle.carrega}"/>
+                            <p:inputTextarea id="complemento" value="#{funcionarioControle.imovel.endereco.complemento}" rendered="#{!funcionarioControle.carrega}" cols="50" readonly="true" />
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

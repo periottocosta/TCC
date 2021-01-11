@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Pesq. Cliente</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; "/>
+                <h:form id="formPesqFuncionario">
+                    <p:fieldset legend="Pesquisar Cliente">                        
+                        <h:panelGrid style="margin-bottom: 20px;" columns="3">
+                            <h:outputLabel value="Nome:" />
+                            <p:inputText id="cepefe" value="#{clienteControle.cliente.nome}"/>
+                            <p:commandButton  ajax="false" value="Pesquisar" action="#{clienteControle.pesquisaNomeCliente()}" icon="ui-icon-search" />
+                        </h:panelGrid>
+                        <p:dataTable id="gridFuncionario" paginator="false" rows="15" 
+                                     emptyMessage="Nenhum valor encontrado" value="#{clienteControle.modelCli}" var="clienteGrid">
+                            <f:facet name="header">
+                                <h:outputText value="Listando" />
+                            </f:facet>
+                            <p:column>
+                                <f:facet name="header">Nome:</f:facet>
+                                <h:outputText value="#{clienteGrid.nome}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Cpf:</f:facet>
+                                <h:outputText value="#{clienteGrid.cpf}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">cracha:</f:facet>
+                                <h:outputText value="#{clienteGrid.telefone}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Ver endereco:</f:facet>
+                                <p:commandButton value="Ver endereco" action="#{clienteControle.pesuisaEndereco}" oncomplete="dlgEnd.show()"/>
+                            </p:column>    
+                            <p:column>
+                                <f:facet name="header">Ver imovel:</f:facet>
+                                <p:commandButton value="Ver imovel" action="#{clienteControle.carregaListaImovel}" oncomplete="dlg.show()" />
+                            </p:column>    
+                            <p:column>
+                                <f:facet name="header">Alterar - Excluir </f:facet>
+                                <h:commandLink  action="#{clienteControle.alterar()}" value="Alterar"/> - 
+                                <h:commandLink action="#{clienteControle.excluir()}" value="Excluir"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                    <p:dialog header="Pesquisa de Imoveis" widgetVar="dlg" resizable="false" appendToBody="true">  
+                        <p:commandButton value="Carregar" update="gridImovel"/>
+                        <p:dataTable id="gridImovel" paginator="true" rows="15" 
+                                     value="#{clienteControle.imoveis}" emptyMessage="Nenhum valor encontrado"  var="imovelGrid">
+                            <p:column>
+                                <f:facet name="header">Area privada </f:facet>
+                                <h:outputText id="areP" value="#{imovelGrid.arePrivada}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Area total </f:facet>
+                                <h:outputText id="areT" value="#{imovelGrid.areaTotal}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">N° banheiros :</f:facet>
+                                <h:outputText id="Nb" value="#{imovelGrid.nbanheiros}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">N° suites :</f:facet>
+                                <h:outputText id="Ns" value="#{imovelGrid.nsuites}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">N° dormitorios :</f:facet>
+                                <h:outputText id="Nd" value="#{imovelGrid.ndormitorios}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">N° vagas garagem :</f:facet>
+                                <h:outputText id="Nv" value="#{imovelGrid.nvagasGaragem}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Valor do imovel :</f:facet>
+                                <h:outputText id="Vimo" value="#{imovelGrid.valorImovel}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Tipo imovel :</f:facet>
+                                <h:outputText id="tipo" value="#{imovelGrid.tipoImovel.nome}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:dialog>
+                    <p:dialog header="Pesquisa de Imoveis" widgetVar="dlgEnd" resizable="false" appendToBody="true">  
+                        <p:commandButton value="Carregar" update="endereco2"/>
+                        <h:panelGrid id="endereco2" columns="2">
+                            <h:outputText value="Logradouro: " />
+                            <p:inputText id="logradouro" value="#{clienteControle.cliente.endereco.cep.logradouro}" size="35" readonly="true" required="false" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Numero: " />
+                            <p:inputText id="numero" value="#{clienteControle.cliente.endereco.numero}" required="true" readonly="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Bairro: " />
+                            <p:inputText id="bairro" value="#{clienteControle.cliente.endereco.cep.bairro.nome}" readonly="true" required="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Municipio: " />                            
+                            <p:inputText id="municipio" value="#{clienteControle.cliente.endereco.cep.bairro.municipio.nome}" readonly="true" required="false" requiredMessage="Numero obrigatorio!!" />
+
+                            <h:outputText value="Estado: " />
+                            <p:inputText id="estado" value="#{clienteControle.cliente.endereco.cep.bairro.municipio.estado.sigla}" readonly="true" required="false" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="complemento: " />
+                            <p:inputTextarea id="complemento" value="#{clienteControle.cliente.endereco.complemento}" cols="50" required="false" readonly="true" requiredMessage="Numero obrigatorio!!" />
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

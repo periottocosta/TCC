@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="../css/sistema.css" />
+       
+        <title>Menu</title> 
+    </h:head>
+    <h:body>
+        <div id="principal">
+            <!--<h:outputLink value="../j_spring_security_logout">Sair</h:outputLink>-->
+            <p:ajaxStatus  onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>  
+            <p:dialog modal="true" widgetVar="statusDialog"   
+                      draggable="false" closable="false" >  
+                <p:graphicImage value="../imagens/carregando.gif" />  
+            </p:dialog>  
+            
+            <p>Ola: #{usuarioControle.user.func.nome}</p>
+            <h:form prependId="false" id="fomMenu"> 
+                <p:growl id="messages"/>                 
+                <p:menubar>  
+                    <p:menuitem value="Home" url="menu.faces" />  
+                    <p:submenu label="Cadastro">  
+                        <p:menuitem value="Funcionario" action="#{funcionarioControle.novoFuncionario()}" ajax="false" />  
+                        <p:menuitem value="Cliente" action="#{clienteControle.novoCliente()}" ajax="false" />  
+                        <p:menuitem value="Imovel" action="#{imovelControle.novoImovel()}" ajax="false" />  
+                        <p:menuitem value="Função" action="#{funcaoControle.novaFuncao()}" ajax="false" />  
+                        <p:menuitem value="Tipo de imovel" action="#{tipoDeImovelControle.novoTipoImovel()}" ajax="false" />  
+                        <p:menuitem value="Usuário" action="#{usuarioControle.novoUser()}" ajax="false" />  
+                    </p:submenu>  
+                    <p:submenu label="Pesquisar" >  
+                        <p:menuitem value="Funcionario" action="#{funcionarioControle.pesquisa()}"  ajax="false" /> 
+                        <p:menuitem value="Cliente" action="#{clienteControle.pesquisa()}"  ajax="false"/> 
+                        <p:menuitem value="Tipo de imóvel" action="#{tipoDeImovelControle.pesquisa()}"  ajax="false"/> 
+                        <p:menuitem value="Função" action="#{funcaoControle.pesquisa()}"  ajax="false"/> 
+                        <p:menuitem value="Usuário" action="#{usuarioControle.pesquisa()}"  ajax="false"/> 
+                        <p:menuitem value="Imóvel" action="#{imovelControle.pesquisa()}"  ajax="false"/> 
+                    </p:submenu>                         
+<!--                    <p:submenu label="Relátorios">                         
+                        <p:menuitem value="Corretor" action="#/{funcionarioControle.relatorio()}"  ajax="false"/> 
+                        <p:menuitem value="Visitas" action="#/{funcionarioControle.relatorio()}"  ajax="false"/> 
+                    </p:submenu>                         
+                    <p:submenu label="Vendas">                         
+                        <p:menuitem value="Cadastrar" action="#/{vendaControle.novaVenda()}"  ajax="false"/> 
+                        <p:menuitem value="Pesquisar" action="#/{vendaControle.pesquisaVenda()}"  ajax="false"/> 
+                    </p:submenu>
+                    <p:menuitem value="TesteMenu" url="menuSub.faces" ajax="false"/>  
+                      <p:menuitem value="galeria" url="galeria.faces" />  -->
+                    <p:menuitem value="Sair" url="../j_spring_security_logout"/> 
+                    
+                </p:menubar>                
+            </h:form>  
+            <ui:insert name="center">
+            </ui:insert>
+        </div>
+    </h:body>
+</html>

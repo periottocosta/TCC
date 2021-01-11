@@ -1,0 +1,21 @@
+.ui-icon-alt {
+
+    padding: 0px ;
+    margin: 5px 5px;
+}
+.cad{ 
+    padding: 0px ;
+    margin: 5px 5px;
+}
+#formsPesq{
+    margin: 5px 5px;
+    padding: 5px 5px;
+}
+
+nav, section{
+	padding:0px 10px;
+}
+
+label{
+	font: 80% "Trebuchet MS", sans-serif;
+}

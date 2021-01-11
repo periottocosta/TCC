@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        
+        <title>Pax Imobiliária</title>
+        <link href="css/css.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="css/coin-slider-styles.css" type="text/css" />
+        <script type="text/javascript" src="js/coin-slider.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#coin-slider').coinslider({width: 900, height: 300, sph: 2, effect: 'random', navigation: true,
+                    links: false, delay: 2000, sDelay: 150});
+            });
+        </script>
+    </h:head>
+    <h:body>
+        <f:view encoding="ISO-8859-1"> 
+            <div id="principal">
+                <p:growl id="messages"/>   
+                <p:ajaxStatus  onstart="statusDialog.show();" onsuccess="statusDialog.hide();"/>
+                <p:dialog modal="true" widgetVar="statusDialog"   
+                          draggable="false" closable="false" >  
+                    <p:graphicImage value="../imagens/carregando.gif" />  
+                </p:dialog>
+                <div id="logoContato">
+                    <div id="logo" >
+                    </div>
+                    <div id="fotoContato">
+                    </div>
+                </div>
+                <div id="menu">
+                    <ul id="menu">
+                        <li ><a href="index.faces">Home</a></li>
+                        <li ><a href="conheca.faces">Conheça a Região</a></li>
+                        <li ><a href="localizacao.faces">Localização</a></li>
+                        <li ><a href="contato.faces">Contato</a></li>
+                        <li ><a  href="sistema/menu.faces">Login</a></li>
+                    </ul>
+                </div>
+                <hr></hr> 
+                <div id="test" style="height: 85px; width: 900px;">
+                    <h:form id="formCodigo">
+                        <p:panel styleClass="panelCodigo">
+                            <h:panelGrid columns="1">
+                                <h:outputText value="Pesquisa por Código" style="font-size: 15px;"/>                            
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:inputText size="10" value="#{siteControle.imovelFiltro.codigo}"/>
+                                <p:commandButton action="#{siteControle.pesquisaCodigoImovel()}" ajax="false" title="Pesquisar" style="width: 30px; height: 30px;" icon="ui-icon-search"/> 
+                            </h:panelGrid>
+                        </p:panel >
+                    </h:form>
+                    <h:form id="formFiltro">
+                        <p:panel styleClass="panelFiltro">
+                            <h:panelGrid columns="1">
+                                <h:outputText value="Pesquisar Imovel"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="6">                           
+                                <h:selectOneMenu id="IDCidade" style="font-size: 15px;" class="select" valueChangeListener="#{imovelControle.pesquiBairro2}" immediate="true" >
+                                    <f:selectItem itemValue="" itemLabel="Cidade"/>
+                                    <f:selectItem itemValue="Florianopolis" itemLabel="Florianópolis"/>
+                                    <f:selectItem itemValue="Biguaçu" itemLabel="Biguaçu"/>
+                                    <f:selectItem itemValue="Palhoça" itemLabel="Palhoça"/>
+                                    <f:selectItem itemValue="São Jose" itemLabel="São Jose"/>
+                                    <f:ajax event="change" render="bairroFiltro" />
+                                </h:selectOneMenu>
+                                <h:selectOneMenu id="bairroFiltro" style="font-size: 15px; width: 100px;" class="select" value="#{siteControle.bairroFiltro.id}" >
+                                    <f:selectItem itemValue="" itemLabel="Bairro"/>
+                                    <f:selectItems id="listaCombo" value="#{imovelControle.listBairro}"/>
+                                </h:selectOneMenu>
+                                <h:selectOneMenu id="IDtipos"  style="font-size: 15px;" class="select" value="#{siteControle.tipoImovelFiltro.id}" >
+                                    <f:selectItem itemValue="" itemLabel="Tipos"/>
+                                    <f:selectItems value="#{siteControle.todosTipoImovel}"/>
+                                </h:selectOneMenu>
+                                <h:selectOneMenu id="IDdormitorios" style="font-size: 15px;"  class="select" value="#{siteControle.imovelFiltro.ndormitorios}">
+                                    <f:selectItem itemValue="" itemLabel="Dormitorios"/>
+                                    <f:selectItem itemValue="1" itemLabel="1"/>
+                                    <f:selectItem itemValue="2" itemLabel="2"/>
+                                    <f:selectItem itemValue="3" itemLabel="3"/>
+                                    <f:selectItem itemValue="4" itemLabel="4"/>
+                                </h:selectOneMenu>
+                                <h:selectOneMenu id="IDvalor"  style="font-size: 15px;" class="select" value="#{siteControle.imovelFiltro.valorImovel}">
+                                    <f:selectItem itemValue="" itemLabel="Valor R$"/>
+                                    <f:selectItem itemValue="50000" itemLabel="50.000,00"/>
+                                    <f:selectItem itemValue="100000" itemLabel="100.000,00"/>
+                                    <f:selectItem itemValue="200000" itemLabel="200.000,00"/>
+                                    <f:selectItem itemValue="300000" itemLabel="300.000,00"/>
+                                    <f:selectItem itemValue="400000" itemLabel="400.000,00"/>
+                                    <f:selectItem itemValue="500000" itemLabel="500.000,00"/>
+                                    <f:selectItem itemValue="600000" itemLabel="600.000,00"/>
+                                    <f:selectItem itemValue="700000" itemLabel="700.000,00"/>
+                                    <f:selectItem itemValue="800000" itemLabel="800.000,00"/>
+                                    <f:selectItem itemValue="900000" itemLabel="900.000,00"/>
+                                    <f:selectItem itemValue="1000000" itemLabel="1.000.000,00"/>
+                                    <f:selectItem itemValue="2000000" itemLabel="2.000.000,00"/>
+                                </h:selectOneMenu>
+                                <p:commandButton action="#{siteControle.pesquisaFiltro()}" ajax="false" title="Pesquisar" style="width: 30px; height: 30px;" icon="ui-icon-search"/> 
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:form>
+                </div>
+                <hr></hr>
+                <ui:insert name="center">
+                    <div id="banner">
+                        <div id='coin-slider'>
+                            <a href="#"> 
+                                <img  src="../imagens/banner.jpg" style="width:900px; height:300px;"/>
+                            </a>
+                            <c:forEach var="image" items="#{imovelControle.imagensGaleria}">
+                                <a href="#"> 
+                                    <p:graphicImage value="../imagensDeImoveis/#{image.nome}" style="width:900px; height:300px;"/>
+                                    <span >
+                                        <p>#{image.idImovel.descricao}</p>
+                                    </span>
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </div>
+                    <hr></hr>
+                    <div id="vitrineN">
+                        <c:forEach var="image" items="#{siteControle.imagens}" >
+                            <div class="imoveisCentro1">
+                                <p:graphicImage value="../imagensDeImoveis/#{image.nome}" />
+                                <div class="bairro1">
+                                    <p  style="font-size: 13px; font-weight: bold;">#{image.idImovel.endereco.cep.bairro.nome}</p>  
+                                </div>
+                                <div id="cont">
+                                    <p  style="font-size: 12px; float: left;">#{image.idImovel.tipoImovel.nome}</p> <br />  
+                                    <p  style="font-size: 12px; ">
+                                        <h:form >
+                                            <h:commandLink action="#{siteControle.carregaImovelSelecionado(image.idImovel.id)}" style="font-size: 12px; color: #000; float: left;"> 
+                                                Ver+
+                                            </h:commandLink>
+                                        </h:form>
+                                    </p>
+                                </div>
+                                <div class="valor1">
+                                    <p id="demo4" style="font-size: 12px; color: red;">R$ #{image.idImovel.valorImovel}</p>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div> 
+                </ui:insert>
+            </div>
+            <div id="rodape">
+                <div id="conteudoRodape" style="width: 900px;margin: 0 auto;">
+                    <img src="imagens/logo.png" style="width: 100px;height: 80px; float:left;"/>
+                    <div style=" margin: 0 auto;">  
+                        <img  src="imagens/rodape.png"/>
+                        <a href="http://www.twitter.com" ><img class="img_cont" src="imagens/twitter.png" alt=""/></a>
+                        <a href="http://www.facebook.com" ><img class="img_cont" src="imagens/facebook.png" alt=""/></a>
+                    </div>
+                
+                </div>
+            </div>
+        </f:view> 
+    </h:body>
+</html>

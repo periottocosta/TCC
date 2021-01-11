@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <link href="jquery/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+
+        <script type="text/javascript">
+            var map,
+            currentPosition,
+            directionsDisplay, 
+            directionsService,
+            destinationLatitude = 59.3426606750,
+            destinationLongitude = 18.0736160278;
+
+            function initializeMapAndCalculateRoute(lat, lon)
+            {
+                directionsDisplay = new google.maps.DirectionsRenderer(); 
+                directionsService = new google.maps.DirectionsService();
+
+                currentPosition = new google.maps.LatLng(lat, lon);
+
+                map = new google.maps.Map(document.getElementById('map_canvas'), {
+                    zoom: 15,
+                    center: currentPosition,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                directionsDisplay.setMap(map);
+
+                var currentPositionMarker = new google.maps.Marker({
+                    position: currentPosition,
+                    map: map,
+                    title: "Current position"
+                });
+
+                // current position marker info
+
+                var infowindow = new google.maps.InfoWindow();
+                google.maps.event.addListener(currentPositionMarker, 'click', function() {
+                    infowindow.setContent("Current position: latitude: " + lat +" longitude: " + lon);
+                    infowindow.open(map, currentPositionMarker);
+                });
+
+                // calculate Route
+                calculateRoute();
+            }
+
+            function locError(error) {
+                // the current position could not be located
+            }
+
+            function locSuccess(position) {
+                // initialize map with current position and calculate the route
+                initializeMapAndCalculateRoute(position.coords.latitude, position.coords.longitude);
+            }
+
+            function calculateRoute() {
+
+                var targetDestination =  new google.maps.LatLng(destinationLatitude, destinationLongitude);
+                if (currentPosition != '' && targetDestination != '') {
+
+                    var request = {
+                        origin: currentPosition, 
+                        destination: targetDestination,
+                        travelMode: google.maps.DirectionsTravelMode["DRIVING"]
+                    };
+
+                    directionsService.route(request, function(response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setPanel(document.getElementById("directions"));
+                            directionsDisplay.setDirections(response); 
+
+                            var myRoute = response.routes[0].legs[0];
+                            for (var i = 0; i < myRoute.steps.length; i++) {
+                                alert(myRoute.steps[i].instructions);
+                            }
+                            $("#results").show();
+                        }
+                        else {
+                            $("#results").hide();
+                        }
+                    });
+                }
+                else {
+                    $("#results").hide();
+                }
+            }
+
+            $(document).live("pagebeforeshow", "#map_page", function() {
+                // find current position and on success initialize map and calculate the route
+                navigator.geolocation.getCurrentPosition(locSuccess, locError);
+            });
+
+        </script>
+    </head>
+    <body>
+        <div id="basic-map" data-role="page">
+            <header  data-theme="b" data-role="header">            
+                <h5>GPS</h5>  
+                <a href="menu.html" data-role="button" data-inline="true" data-theme="a" data-iconpos="notext" data-transition="flow" data-idonpos="left" data-icon="arrow-l" ></a>
+            </header>
+
+            <div data-role="content">
+                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+                    <div id="map_canvas" style="height:300px;"></div>
+                    <div data-role="fieldcontain">
+                        <label for="from">From</label> 
+                        <input type="text" id="from" value="Goteborg, Sweden"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="to">To</label> 
+                        <input type="text" id="to" value="Stockholm, Sweden"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="mode" class="select">Transportation method:</label>
+                        <select name="select-choice-0" id="mode">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                        </select>
+                    </div>
+                    <a data-icon="search" data-role="button" href="#" id="submit">Get directions</a>
+                </div>
+                <div id="results" style="display:none;">
+                    <div id="directions"></div>
+                </div>
+            </div>
+        </div>      
+    </body>
+</html>

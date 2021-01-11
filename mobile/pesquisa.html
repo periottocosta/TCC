@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="jquery/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+        <script type="text/javascript" src="jquery/exemplo.js"></script>
+        <title>Pesquisa</title>
+    </head>
+    <body >       
+        <header  data-theme="b" data-role="header">            
+            <h5>Pesquisas</h5>  
+            <a href="menu.html" data-role="button" data-inline="true" data-theme="a" data-iconpos="notext" data-transition="flow" data-idonpos="left" data-icon="arrow-l" ></a>
+        </header>
+        <section>
+            <h3>Pesquisar Cliente</h3>
+            <form>
+                <input name="nome" id="nome" class="cliente" placeholder="Nome cliente" type="search">
+				<input id="pesqCli" data-role="botton" data-theme="b" data-icon="search" value="Pesquisar" type="button"/>
+            </form>
+				<div id="resultado">
+				</div>
+        </section>
+    </body>
+</html>

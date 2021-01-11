@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="jquery/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>    
+
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+        <script type="text/javascript" src="jquery/exemplo.js"></script>    
+        <title>Menu</title>
+		
+		<script>
+			function pesquisas() {
+				var nomeCliente = $('#nome').val();
+			
+                $(document).bind('tap','#pesqCli',function() {
+                    $.ajax({
+                        url: 'php/cadastro.php?opcao=pesq',
+                        data: $(".cliente").serialize(),
+                        type: 'GET',
+                        context: jQuery('#erro'),
+                        success: function(json) {
+						
+                            var s = json.split("=");
+							
+                            if(s[1] == "true"){
+                                
+                                                                          
+                            }else{
+                                navigator.notification.alert('Nenhum valor encontrado.', function(){});
+                            }
+                        }
+                    });
+                });
+            }
+			
+        function cadastros() {
+            $(document).on('tap','#cad',function() {
+                $.ajax({
+                        url: 'php/cadastro.php?opcao=salvar',
+                        data: $(".cliente").serialize(),
+                        type: 'POST',
+                        context: jQuery('#erro'),
+                        success: function(data) {
+						
+                            var s = data.split("=");
+                            var status = s[1];
+                            if(status == "true"){
+                                navigator.notification.alert('Salvo com sucesso!', function(){});
+                                window.location = "menu.html";
+                            }else{
+                                navigator.notification.alert('Erro ao salvar!', function(){});
+                            }
+                        }
+                    });
+                });
+            }        
+            
+			cadastros();
+			pesquisas();
+		</script>
+    </head>
+    <body>
+        <header  data-theme="b" data-role="header">            
+            <h5>Pax</h5>           
+        </header>
+        <nav>
+            <a href="cadastro.html" data-transition="flow" data-role="button" data-icon="plus" data-theme="a">
+                Cadastrar
+            </a>
+            <a href="pesquisa.html" data-transition="flow" data-role="button" data-icon="search" data-theme="a">
+                Pesquisa
+            </a>     
+            <br>
+            <a href="agenda.html" data-transition="flow" data-role="button" data-icon="grid" data-theme="a">
+                Agenda
+            </a>
+            <a href="gps.html" data-transition="flow" data-role="button" data-icon="info" data-theme="a">
+                GPS
+            </a>			
+        </nav>
+    </body>	
+</html>

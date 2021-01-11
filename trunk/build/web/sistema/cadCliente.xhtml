@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cad. Cliente</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; "/>
+                <h:form id="form_CadCli">
+                    <p:fieldset legend="Cadastro de Cliente" style="padding: 0px 0px 0px 100px;">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome: " />
+                            <p:inputText id="nome" value="#{clienteControle.cliente.nome}" size="30" required="true" requiredMessage="Nome obrigatorio!" />
+
+                            <h:outputText value="Cpf: " />
+                            <p:inputMask id="cpf" mask="999.999.999-99" size="15" value="#{clienteControle.cliente.cpf}" required="true" requiredMessage="Cpf obrigatorio!" />
+
+                            <h:outputText value="Rg: " />
+                            <p:inputText id="rg" value="#{clienteControle.cliente.rg}" size="15" required="true" requiredMessage="RG obrigatorio!"/>
+
+                            <h:outputText value="Telefone: " />
+                            <p:inputMask id="telefone" mask="(99) 9999-9999" size="15" value="#{clienteControle.cliente.telefone}"/>
+
+                            <h:outputText value="Celular: " />
+                            <p:inputMask id="celular" mask="(99) 9999-9999" size="15" value="#{clienteControle.cliente.celular}"/>
+
+                            <h:outputText value="E-mail: " />
+                            <p:inputText id="email" value="#{clienteControle.cliente.email}" size="30" required="true" requiredMessage="E-mail obrigatorio!"/>
+
+                            <h:outputLabel value="Sexo: " />                           
+                            <p:selectOneRadio id="IDsexo" value="#{clienteControle.cliente.sexo}" required="true" requiredMessage="Sexo obrigatorio!">
+                                <f:selectItem itemValue="Masculino" itemLabel="Masculino"/>
+                                <f:selectItem itemValue="Feminino" itemLabel="Feminino"/>
+                            </p:selectOneRadio>
+
+                            <h:outputText value="Data de Nasc: " />                           
+                            <p:calendar id="datan" value="#{clienteControle.cliente.nascimento}" size="15" required="true"
+                                        yearRange="1935" showButtonPanel="true" locale="pt" navigator="true" requiredMessage="Data de mascimento obrigatorio!"/>     
+
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Cep: " />
+                            <p:inputText id="cep" value="#{clienteControle.cep.cep}" size="20" style="margin: 0px 0px 0px 65px"/>
+                            <p:commandButton title="Pesquisar" action="#{clienteControle.pesquisaCep()}" update="endereco" process="@this,cep" icon="ui-icon-search"/>
+                        </h:panelGrid>
+
+                        <h:panelGrid id="endereco" columns="2">
+                            <h:outputText value="Logradouro: " />
+                            <p:inputText id="logradouro" value="#{clienteControle.cep.logradouro}" size="30" readonly="true" required="false" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Numero: " />
+                            <p:inputText id="numero" value="#{clienteControle.end.numero}" size="15" required="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Bairro: " />
+                            <p:inputText id="bairro" value="#{clienteControle.cep.bairro.nome}" size="30" readonly="true" required="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Municipio: " />                            
+                            <p:inputText id="municipio" value="#{clienteControle.cep.bairro.municipio.nome}" readonly="true" required="false"  size="30" requiredMessage="Numero obrigatorio!!" />
+
+                            <h:outputText value="Estado: " />
+                            <p:inputText id="estado" value="#{clienteControle.cep.bairro.municipio.estado.sigla}" size="15" readonly="true" required="false" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Complemento: " />
+                            <p:inputTextarea id="complemento" value="#{clienteControle.end.complemento}" cols="50" required="false" requiredMessage="Numero obrigatorio!!" />
+                        </h:panelGrid>
+                        <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{clienteControle.salvar()}" style="margin: 0px 0px 0px 350px"/>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

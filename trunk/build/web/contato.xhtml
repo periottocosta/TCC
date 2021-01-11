@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="css/css.css" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="index.xhtml">
+            <ui:define name="center">
+                <div id="contato">
+                    <h:form>
+                        <p:fieldset legend="Contato">
+                            <h:panelGrid style="margin: 0 auto; " columns="2">
+                                <h:outputText value="Nome: " />
+                                <p:inputText id="nome" value="#{clienteControle.cliente.nome}" size="50" required="true" requiredMessage="Nome obrigatorio!" />
+
+                                <h:outputText value="E-mail: " />
+                                <p:inputText id="email" value="#{clienteControle.cliente.email}" size="50" required="true" requiredMessage="Email obrigatorio!" />
+
+                                <h:outputText value="Assunto: " />
+                                <p:inputTextarea id="ass" cols="38" required="true" requiredMessage="Assunto obrigatorio!" />
+
+                                <!--c-->
+                                <p:commandButton value="Enviar" icon="ui-icon-disk" action="#{clienteControle.email()}" ajax="false" />
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,10 @@
+#principal{
+    width: 800px;
+    margin: 0 auto;
+}
+
+body{
+    font: 80% "Trebuchet MS", sans-serif;
+ /*background: url('../imagens/fundo-sistema.png') no-repeat right bottom fixed;*/
+    background: url('../imagens/st.png') ;
+}

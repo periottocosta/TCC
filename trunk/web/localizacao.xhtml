@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="css/css.css" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="index.xhtml">
+            <ui:define name="center">
+                <div id="localizacao">
+                    <div id="mapa" >
+                       <iframe width="700" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=pt-BR&amp;geocode=&amp;q=Centro,+Florian%C3%B3polis+-+Santa+Catarina,+Rep%C3%BAblica+Federativa+do+Brasil&amp;aq=0&amp;oq=centro+&amp;sll=-27.362011,-47.785034&amp;sspn=3.409841,5.817261&amp;ie=UTF8&amp;hq=&amp;hnear=Centro,+Florian%C3%B3polis+-+Santa+Catarina,+Rep%C3%BAblica+Federativa+do+Brasil&amp;ll=-27.593237,-48.543736&amp;spn=0.026585,0.045447&amp;t=m&amp;z=14&amp;output=embed"></iframe>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

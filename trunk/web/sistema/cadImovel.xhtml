@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de imovel</title>
+        <script>
+            jQuery(function($) {
+                $("#valor").maskMoney({symbol: "R$ ", decimal: ",", thousands: ".", showSymbol: true});
+            });
+        </script>  
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:dialog header="Pesquisa de Cliente" widgetVar="dlg" resizable="false" appendToBody="true">
+                    <h:form id="formModal">
+                        <h:panelGrid style="margin-bottom: 20px" columns="3">
+                            <h:outputText value="Proprietário"/>
+                            <p:inputText id="cliente" value="#{imovelControle.cliente.nome}" size="25"/>
+                            <p:commandButton value="Pesquisar" icon="ui-icon-search" update="@form" 
+                                             actionListener="#{imovelControle.pesquisaCliente()}"/>
+                        </h:panelGrid>
+                        <p:dataTable id="grid" value="#{imovelControle.modelCliente}" var="cli" 
+                                     paginator="true" rows="6" emptyMessage="Nenhum valor encontrado!">
+                            <p:column>
+                                <f:facet name="header">Nome</f:facet>
+                                <h:outputText value="#{cli.nome}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">CPF</f:facet>
+                                <h:outputText value="#{cli.cpf}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton icon="ui-icon-check" title="Selecione um Proprietário" ajax="false" onclick="dlg.hide()" 
+                                                 action="#{imovelControle.carregaCliente()}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog>      
+
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px;"/>
+                <h:form id="form_CadImovel">
+                    <p:fieldset legend="Cadastro de Imovel" style="padding-left: 50px; padding: 0px 0px 0px 100px;">
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Corretor: " />
+                            <p:selectOneMenu id="IDfuncionariol" value="#{imovelControle.func.id}">
+                                <f:selectItem itemValue="" itemLabel="Selecionar"/>
+                                <f:selectItems value="#{imovelControle.todosFunc}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Proprietário" />
+                            <p:inputText value="#{imovelControle.cliente.nome}" onclick="dlg.show()" readonly="true"/>
+
+                            <h:outputText value="Tipo de Imovel:                   " />
+                            <p:selectOneMenu id="IDtipoImovel" value="#{imovelControle.tipoImovel.id}">
+                                <f:selectItem itemValue="" itemLabel="Selecionar"/>
+                                <f:selectItems value="#{imovelControle.todosTipoImovel}"/>
+                                <p:ajax listener="#{imovelControle.atualizaCampos}" event="change" update="nDormitorios, nSuites, nBanheiro, nVagasGaragem"/>
+                            </p:selectOneMenu>
+                            <h:outputText value="Estatos Imovel: " rendered="#{imovelControle.imovel.id != null}"/>
+                            <p:selectOneMenu id="IDstatusImovel" value="#{imovelControle.imovel.statusImovel}" rendered="#{imovelControle.imovel.id != null}">
+                                <f:selectItem itemValue="" itemLabel="Selecionar"/>
+                                <f:selectItem itemValue="a venda" itemLabel="A venda"/>
+                                <f:selectItem itemValue="vendido" itemLabel="Vendido"/>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Area privada: " />
+                            <p:inputText id="areaPrivada" value="#{imovelControle.imovel.arePrivada}" size="10"/>
+
+                            <h:outputText value="Area Total: "/>
+                            <p:inputText id="areaTotal" value="#{imovelControle.imovel.areaTotal}" size="10" required="true" requiredMessage="Área obrigatoria!" />
+
+                            <h:outputText id="outd"  value="Dormitorios: " />
+                            <p:spinner id="nDormitorios"  value="#{imovelControle.imovel.ndormitorios}" disabled="#{!imovelControle.casa}" size="10"/>
+
+                            <h:outputText id="outs" value="Suites: " />
+                            <p:spinner id="nSuites"  value="#{imovelControle.imovel.nsuites}" disabled="#{!imovelControle.casa }" size="10"/>  
+
+                            <h:outputText id="outb" value="Banheiros: "/>
+                            <p:spinner id="nBanheiro"  value="#{imovelControle.imovel.nbanheiros}" disabled="#{!imovelControle.casa}" size="10"/>  
+
+                            <h:outputText id="outv" value="Vagas na Garagem: " />
+                            <p:spinner id="nVagasGaragem" value="#{imovelControle.imovel.nvagasGaragem}" disabled="#{!imovelControle.casa}" size="10"/>
+
+                            <h:outputText value="Descrição: "/>
+                            <p:inputTextarea id="descricaoImovel" cols="50" value="#{imovelControle.imovel.descricao}" />
+
+                            <h:outputText value="Valor do Imovel: " />
+                            <p:inputText id="valor" value="#{imovelControle.imovel.valorImovel}" size="15">
+                                <f:convertNumber pattern="#,##0.00"></f:convertNumber>  
+                                <p:ajax update="valor" process="valor" event="change" /> 
+                            </p:inputText> 
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Cep: " style="margin: 0px 98px 0px 0px;"/>
+                            <p:inputText id="cep" value="#{imovelControle.cep.cep}" size="15"/>
+                            <p:commandButton title="Pesquisar" action="#{imovelControle.pesquisaCep()}" update="endereco" process="@this,cep" icon="ui-icon-search"/>
+                        </h:panelGrid>  
+
+                        <h:panelGrid id="endereco" columns="2">
+                            <h:outputText value="Logradouro: " />
+                            <p:inputText id="logradouro" value="#{imovelControle.cep.logradouro}" size="30" readonly="true"/>
+
+                            <h:outputText value="Numero: " />
+                            <p:inputText id="numero" value="#{imovelControle.end.numero}" size="30" required="true" requiredMessage="Numero obrigatorio!!"/>
+
+                            <h:outputText value="Bairro: " />
+                            <p:inputText id="bairro" value="#{imovelControle.cep.bairro.nome}" size="30" readonly="true" />
+
+                            <h:outputText value="Municipio: " />                            
+                            <p:inputText id="municipio" value="#{imovelControle.cep.bairro.municipio.nome}" size="30" readonly="true" />
+
+                            <h:outputText value="Estado: " />
+                            <p:inputText id="estado" value="#{imovelControle.cep.bairro.municipio.estado.sigla}" size="10" readonly="true" />
+
+                            <h:outputText value="Complemento: " />
+                            <p:inputTextarea id="complemento" value="#{imovelControle.end.complemento}" cols="50" required="false"/>
+                        </h:panelGrid>
+                        <p:commandButton  value="Salvar" icon="ui-icon-disk" action="#{imovelControle.salvar()}" ajax="false" style="margin: 0px 0px 0px 350px"/>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

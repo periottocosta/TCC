@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cad. Usuário</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px;"/>
+                <h:form id="form_CadTipoImovel">
+                    <p:fieldset legend="Cadastrar Usuário">                       
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Perfil: " />
+                            <p:selectOneMenu id="IDPerfil" value="#{usuarioControle.perfil.id}">
+                                <f:selectItem  itemLabel="Selecionar"/>
+                                <f:selectItems value="#{usuarioControle.todosPerfis}"/>
+                            </p:selectOneMenu>
+                            
+                            <h:outputText value="Funcionario: " />
+                            <p:selectOneMenu id="IDFunc" value="#{usuarioControle.func.id}">
+                                <f:selectItem  itemLabel="Selecionar"/>
+                                <f:selectItems value="#{usuarioControle.todosFunc}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Login: " />
+                            <p:inputText id="login" size="26" value="#{usuarioControle.userCadastro.login}" required="false" requiredMessage="Login obrigatório" />
+                            
+                            <h:outputText value="Senha: " />
+                            <p:inputText id="senha" size="26" value="#{usuarioControle.userCadastro.senha}" required="true" requiredMessage="Senha obrigatório!" />
+
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{usuarioControle.salvar()}" ajax="false"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

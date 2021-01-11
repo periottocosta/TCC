@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px;"/>
+                <h:form id="relatorio">
+                    <p:fieldset legend="Corretores">                      
+                        <p:dataTable id="gridCorretor" paginator="true" rows="15" 
+                                     emptyMessage="Nenhum valor encontrado" value="#{funcionarioControle.modelRelatorio}" var="relatorio">
+                            <p:column>
+                                <f:facet name="header">Nome</f:facet>
+                                <h:outputText value="#{relatorio.nome}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Imóveis</f:facet>
+                                <h:outputText value="#{relatorio.imoveis.size()}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

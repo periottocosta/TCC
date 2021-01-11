@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="../css/sistema.css"/>
+        <title>Menu</title> 
+    </h:head>
+    <h:body>
+        <div id="principal">
+            <h:form>
+                <p:tabView dynamic="true" cache="true" id="menu">
+                    <p:tab title="Home" id="tba1" >
+                        <h:panelGrid>
+                            Bem vindo! 
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Cadastro" id="tba2" >
+                        <h:panelGrid columns="7">
+                            <h:commandLink action="#{clienteControle.novoCliente()}">
+                                <img id="icone" src="../imagens/icones/cliente.png"/>
+                            </h:commandLink>
+                            <p:commandLink action="#{imovelControle.novoImovel()}">
+                                <img id="icone" src="../imagens/icones/imovel.png"/>
+                            </p:commandLink>
+
+                            <p:commandLink action="#{funcionarioControle.novoFuncionario()}">
+                                <img id="icone" src="../imagens/icones/func.png"/>
+                            </p:commandLink>
+
+                            <p:commandLink action="#{usuarioControle.novoUser()}">
+                                <img id="icone" src="../imagens/icones/user.png"/>
+                            </p:commandLink>
+
+                            <p:commandLink>
+                                <img id="icone" src="../imagens/icones/tipo.png"/>
+                            </p:commandLink>
+
+                            <p:commandLink>
+                                <img id="icone" src="../imagens/icones/funcao.png"/>
+                            </p:commandLink>
+
+                            <p:commandLink>
+                                <img id="icone2" src="../imagens/icones/perfil.png"/>
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Pesquisa" id="tba4" >
+                        <h:panelGrid columns="4">
+                            <p:commandLink action="#{clienteControle.novoCliente()}">
+                                <img id="icone" src="../imagens/icones/cliente.png"/>
+                            </p:commandLink>
+                            <p:commandLink action="#{imovelControle.novoImovel()}">
+                                <img id="icone" src="../imagens/icones/imovel.png"/>
+                            </p:commandLink>
+                            <p:commandLink action="#{funcionarioControle.novoFuncionario()}">
+                                <img id="icone" src="../imagens/icones/func.png"/>
+                            </p:commandLink>
+                            <p:commandLink action="#{usuarioControle.novoUser()}">
+                                <img id="icone2" src="../imagens/icones/user.png"/>
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Relatórios" id="tba3" >
+                        <h:panelGrid columns="2">
+                            <a>Visistas<img id="icone" src="../imagens/icones/stats_bars.png"/></a>
+                            <a>Vendas<img id="icone2" src="../imagens/icones/stats_lines.png"/></a>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Sistema">
+                        <a href="menu.faces">menu</a>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+            <ui:insert name="center">
+            </ui:insert>
+        </div>
+    </h:body>
+</html>

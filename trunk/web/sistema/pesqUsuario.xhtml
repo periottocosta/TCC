@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; padding: 0px 0px 0px 100px;"/>
+                <h:form id="form_CadTipoImovel">
+                    <p:fieldset legend="Pesquisa Usuário">                       
+                        <h:panelGrid style="margin-bottom: 20px;" columns="3">
+                            <h:outputText value="Perfil: " />
+                            <p:selectOneMenu id="IDPerfil" value="#{usuarioControle.perfil.id}">
+                                <f:selectItem  itemLabel="Selecionar"/>
+                                <f:selectItems value="#{usuarioControle.todosPerfis}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton  ajax="false" value="Pesquisar" action="#{usuarioControle.pesquisaUsuario()}" icon="ui-icon-search" />
+                        </h:panelGrid>
+                        <p:dataTable id="gridFuncionario" paginator="false" rows="15" 
+                                     emptyMessage="Nenhum valor encontrado" value="#{usuarioControle.modelUser}" var="funcGrid">
+                        <f:facet name="header">
+                            <h:outputText value="Listando usuários" />
+                        </f:facet>
+                        <p:column>
+                            <f:facet name="header">Nome</f:facet>
+                            <h:outputText value="#{funcGrid.func.nome}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Perfil</f:facet>
+                            <h:outputText value="#{funcGrid.perfil.descricao}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Login</f:facet>
+                            <h:outputText value="#{funcGrid.login}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">Alterar - Excluir </f:facet>
+                            <h:commandLink  action="#{usuarioControle.alterar()}" value="Alterar"/> - 
+                            <h:commandLink action="#{usuarioControle.excluir()}" value="Excluir"/>
+                        </p:column>
+                    </p:dataTable>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

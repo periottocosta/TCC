@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <link href="jquery/jquery.mobile-1.3.1.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery/style.css" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="jquery/jquery.mobile-1.3.1.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+
+        <script>
+            document.addEventListener("deviceready", login, false);
+            // IP == 187.65.194.240;
+            function login() {
+                $("#botao").on('tap', function() {
+                    $.ajax({
+                        url: 'php/login.php',
+                        data: $(".login").serialize(),
+                        type: 'POST',
+                        context: jQuery('#erro'),
+                        success: function(data) {
+                            var s = data.split("=");
+                            var status = s[1];
+                            if(status == "true"){
+                                window.location = "menu.html";
+                            }else{
+                                navigator.notification.alert('Login e/ou senha incorretos.', function(){});
+                            }
+                        }
+                    });
+                });
+            }
+        </script>
+        <title>Login</title>
+    </head>
+    <body>  
+        <header  data-theme="b" data-role="header">            
+            <h5>Olá</h5>			
+        </header>  
+        <section>
+            <div class="login"> 
+                <input class="login" type="text" name="user" id="user" placeholder="Login"/>
+                <input class="login" type="password" name="pass" id="pass" placeholder="Senha"/>
+                <input id="botao" data-role="botton" data-theme="a" data-icon="check" value="Entrar" type="button"/>
+            </div>
+        </section>      
+    </body>
+</html>

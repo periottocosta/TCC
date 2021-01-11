@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Cadastro de Função</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px;"/>
+                <h:form id="form_CadFuncao">
+                    <p:fieldset legend="Cadastrar Função">
+
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome: " />
+                            <p:inputText id="nome" value="#{funcaoControle.funcao.nome}" required="true" requiredMessage="Nome obrigatorio!!" />
+
+                            <h:outputText value="Descricao: " />
+                            <p:inputTextarea id="descricao"  value="#{funcaoControle.funcao.descricao}" cols="50" readonly="De uma descrição da Função" required="false" requiredMessage="Descricao" />
+
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{funcaoControle.salvar()}" ajax="false"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

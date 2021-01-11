@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Pesq. Funcionario</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; "/>
+                <h:form prependId="false" id="fromPesq">    
+                    <p:dialog header="Pesquisa de Bairro" widgetVar="dlg" resizable="false" appendToBody="true">  
+                        <p:commandButton value="Carregar"  update="detalhes"/>
+                        <h:panelGrid columns="2" id="detalhes">
+
+                            <h:outputText value="Cliente :"  rendered="#{imovelControle.imovel.cliente.nome != null}"/>
+                            <p:inputText id="clienten" value="#{imovelControle.imovel.cliente.nome}" rendered="#{imovelControle.imovel.cliente.nome != null}"/>
+
+                            <h:outputText value="Area privada :"  rendered="#{imovelControle.imovel.arePrivada != null}"/>
+                            <p:inputText id="areP" value="#{imovelControle.imovel.arePrivada}" rendered="#{imovelControle.imovel.arePrivada != null}"/>
+
+                            <h:outputText value="Area total :" rendered="#{imovelControle.imovel.areaTotal != null}"/>
+                            <p:inputText id="areT" value="#{imovelControle.imovel.areaTotal}" rendered="#{imovelControle.imovel.areaTotal != null}"/>
+
+                            <h:outputText value="N° banheiros :" rendered="#{imovelControle.imovel.nbanheiros != null}"/>
+                            <p:inputText id="Nb" value="#{imovelControle.imovel.nbanheiros}" rendered="#{imovelControle.imovel.nbanheiros != null}"/>
+
+                            <h:outputText value="N° suites :" rendered="#{imovelControle.imovel.nsuites != null}"/>
+                            <p:inputText id="Ns" value="#{imovelControle.imovel.nsuites}" rendered="#{imovelControle.imovel.nsuites != null}"/>
+
+                            <h:outputText value="N° dormitorios :" rendered="#{imovelControle.imovel.ndormitorios != null}"/>
+                            <p:inputText id="Nd" value="#{imovelControle.imovel.ndormitorios}" rendered="#{imovelControle.imovel.ndormitorios != null}"/>
+
+                            <h:outputText value="N° vagas garagem :" rendered="#{imovelControle.imovel.nvagasGaragem != null}"/>
+                            <p:inputText id="Nv" value="#{imovelControle.imovel.nvagasGaragem}" rendered="#{imovelControle.imovel.nvagasGaragem != null}"/>
+
+                            <h:outputText value="Valor do imovel :" rendered="#{imovelControle.imovel.valorImovel != null}"/>
+                            <p:inputText id="Vimo" value="#{imovelControle.imovel.valorImovel}" rendered="#{imovelControle.imovel.valorImovel != null}"/>
+                            
+                            <h:outputText value="Condigo :" rendered="#{imovelControle.imovel.codigo != null}"/>
+                            <p:inputText id="codigo2" value="#{imovelControle.imovel.codigo}" rendered="#{imovelControle.imovel.codigo != null}"/>
+
+                            <h:outputText value="Descrição :" rendered="#{imovelControle.imovel.descricao != null}"/>
+                            <p:inputTextarea id="descricao" value="#{imovelControle.imovel.descricao}" rendered="#{imovelControle.imovel.descricao != null}"/>
+                        </h:panelGrid>
+                    </p:dialog>
+                 
+                    <p:fieldset style="width: 380px; height: 100px; float: left;" legend="Pesquisa por bairro">
+                        <h:panelGrid style="margin-bottom: 20px; float: left;width: 300px; height: 60px;" columns="3" >
+                            <h:outputLabel value="Municipio:" />
+                            <p:selectOneMenu id="IDMunicipio" value="#{imovelControle.municipio.nome}"  >
+                                <f:selectItem itemValue="" itemLabel="Cidade"/>
+                                <f:selectItem itemValue="Florianopolis" itemLabel="Florianópolis"/>
+                                <f:selectItem itemValue="Biguaçu" itemLabel="Biguaçu"/>
+                                <f:selectItem itemValue="Palhoça" itemLabel="Palhoça"/>
+                                <f:selectItem itemValue="São Jose" itemLabel="São Jose"/>
+                                <p:ajax listener="#{imovelControle.pesquiBairro()}" event="change" update="IDbairro122,listaCombo"/>
+                            </p:selectOneMenu>   
+                            <!--k-->
+                            <h:outputLabel value="Bairro:" />
+                            <p:selectOneMenu id="IDbairro122" value="#{imovelControle.bairro.id}">  
+                                <f:selectItem itemValue="" itemLabel="Bairro" />
+                                <f:selectItems id="listaCombo" value="#{imovelControle.listBairroSistema}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton update="gridImovell" title="Pesquisar" action="#{imovelControle.pesquisaImovel()}" icon="ui-icon-search" />
+                        </h:panelGrid> 
+                    </p:fieldset>                    
+                    <p:fieldset style="width: 350px; height: 100px; float: left;" legend="Pesquisa por codigo">
+                        <h:panelGrid columns="3" style="widht: 200px; float: left; height: 70px;">
+                            <h:outputLabel value="Codigo:"/>
+                            <p:inputText id="codigo" value="#{imovelControle.imovel.codigo}"/>
+                            <p:commandButton update="gridImovell" title="Pesquisar" action="#{imovelControle.pesquiCodigoImovel()}" icon="ui-icon-search" />
+                        </h:panelGrid>
+                    </p:fieldset>                 
+                 
+                    <p:fieldset legend="Imovel" style="float: left; width: 770px;">
+                        <p:dataTable id="gridImovell" paginator="true" rows="4" 
+                                     value="#{imovelControle.modelImovel}" var="ImovelGrid">
+                            <p:column style="font-size: 12px;">
+                                <f:facet name="header">Corretor:</f:facet>
+                                <h:outputText style="font-size: 12px;" value="#{ImovelGrid.funcionario.nome}"/><br/>
+                            </p:column >
+                            <p:column style="font-size: 12px;">
+                                <f:facet name="header">Tipo:</f:facet>
+                                <h:outputText value="#{ImovelGrid.tipoImovel.nome}"/><br/>
+                            </p:column >
+                            <p:column style="font-size: 12px;" >
+                                <f:facet name="header">+ detalhes:</f:facet>
+                                <p:commandButton value="+ detalhes" style="font-size: 12px;" action="#{imovelControle.carregaDetalhes}" oncomplete="dlg.show()"  />
+                            </p:column >
+                            <p:column style="font-size: 12px;" >
+                                <f:facet name="header">Pesq Img:</f:facet>
+                                <h:commandLink value="carregar imagens"  action="#{imovelControle.carregaImovel()}"  />
+                            </p:column >
+                            <p:column style="font-size: 12px; width: 60px;" >
+                                <f:facet name="header">Imagen galeria:</f:facet>
+                                <h:commandLink value="carregar imagens" style="font-size: 12px;" action="#{imovelControle.carregaImovelG()}"  />
+                            </p:column >
+                         
+                            <p:column >
+                                <f:facet name="header">Alterar/Excluir:</f:facet>
+                                <h:commandLink value="Alterar"  action="#{imovelControle.alterar()}"  /> /
+                                <h:commandLink value="Excluir"  action="#{imovelControle.carregaImovel()}"  />
+                            </p:column> 
+                        </p:dataTable>
+                    </p:fieldset>                       
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; padding: 0px 0px 0px 100px;"/>
+                <h:form id="cadVenda">
+                    <p:fieldset legend="Iniciar Venda">                       
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Funcionário: " />
+                            <p:inputText id="nome" size="26" value="#{vendaControle.func.nome}" onclick="func.show()" readonly="true" required="true" requiredMessage="Selecione um Proprietário" />
+
+                            <h:outputText value="Imovel: " />
+                            <p:inputText id="imovel"  size="26" value="#{vendaControle.imovel.codigo}" onclick="imovel.show()" readonly="true" required="true" requiredMessage="Selecione um Imovel" />
+                            
+                            <h:outputText value="Valor: " />
+                            <p:inputText id="valor"  size="26" value="#{vendaControle.venda.valor}" required="true" requiredMessage="Valor obrigátorio!" />
+
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{vendaControle.salvar()}" ajax="false"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
+                
+                <p:dialog header="Pesquisa de Funcionário" widgetVar="func" resizable="false" appendToBody="true">
+                    <h:form id="formModal">
+                        <h:panelGrid style="margin-bottom: 20px" columns="3">
+                            <h:outputText value="Funcionário"/>
+                            <p:inputText id="func" value="#{vendaControle.func.nome}" size="25"/>
+                            <p:commandButton value="Pesquisar" icon="ui-icon-search" update="@form" 
+                                             actionListener="#{vendaControle.pesquisaFunc()}"/>
+                        </h:panelGrid>
+                        <p:dataTable id="grid" value="#{vendaControle.modelFunc}" var="func" 
+                                     paginator="true" rows="6" emptyMessage="Nenhum valor encontrado!">
+                            <p:column>
+                                <f:facet name="header">Nome</f:facet>
+                                <h:outputText value="#{func.nome}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">CPF</f:facet>
+                                <h:outputText value="#{func.cpf}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton icon="ui-icon-check" title="Selecione um Funcionário" ajax="false" onclick="func.hide()" 
+                                                 action="#{vendaControle.carregaFunc()}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog>
+                                
+                <p:dialog header="Pesquisa de Imovel" widgetVar="imovel" resizable="false" appendToBody="true">
+                    <h:form id="form">
+                        <h:panelGrid style="margin-bottom: 20px" columns="3">
+                            <h:outputText value="Imovel"/>
+                            <p:inputText id="func" value="#{vendaControle.imovel.codigo}" size="25"/>
+                            <p:commandButton value="Pesquisar" icon="ui-icon-search" update="@form" 
+                                             actionListener="#{vendaControle.pesquisaImovel()}"/>
+                        </h:panelGrid>
+                        <p:dataTable id="grid" value="#{vendaControle.modelImovel}" var="imovel" 
+                                     paginator="true" rows="6" emptyMessage="Nenhum valor encontrado!">
+                            <p:column>
+                                <f:facet name="header">Código</f:facet>
+                                <h:outputText value="#{imovel.codigo}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">Status</f:facet>
+                                <h:outputText value="#{imovel.statusImovel}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton icon="ui-icon-check" title="Selecione um Imovel" ajax="false" onclick="imovel.hide()" 
+                                                 action="#{vendaControle.carregaImovel()}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog>
+                
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

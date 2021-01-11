@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./menu.xhtml">
+            <ui:define name="center">
+                <p:separator style="width: 98%; height: 0px; margin-top: 10px; padding: 0px 0px 0px 100px;"/>
+                <h:form id="form_CadTipoImovel">
+                    <p:fieldset legend="Cadastrar Tipo de imovel">                       
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Nome: " />
+                            <p:inputText id="nome" size="26" value="#{tipoDeImovelControle.tipoImovel.nome}" required="true" requiredMessage="Nome obrigatorio!!" />
+
+                            <h:outputText value="Descricao: " />
+                            <p:inputTextarea id="descricao"  value="#{tipoDeImovelControle.tipoImovel.descricao}" required="true" requiredMessage="Dê uma descrição do Tipo de Imovel" />
+
+                            <p:commandButton value="Salvar" icon="ui-icon-disk" action="#{tipoDeImovelControle.salvar()}" ajax="false"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
